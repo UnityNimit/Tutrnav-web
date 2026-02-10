@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutrnav - Teacher Dashboard</title>
+    <!-- Tailwind CSS for Styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Feather Icons for UI elements -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    
+    <style>
+        /* Custom scrollbar for dark theme */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1f2937; }
+        ::-webkit-scrollbar-thumb { background: #374151; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #4b5563; }
+        
+        /* Utility to hide sections */
+        .hidden-section { display: none; }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans flex h-screen overflow-hidden">
+
+    <!-- ================= SIDEBAR ================= -->
+    <aside class="w-64 bg-gray-800 border-r border-gray-700 flex flex-col hidden md:flex">
+        <!-- Brand -->
+        <div class="h-16 flex items-center px-8 border-b border-gray-700">
+            <h1 class="text-2xl font-bold text-blue-500 tracking-wider">Tutrnav</h1>
+        </div>
+
+        <!-- Navigation Links -->
+        <nav class="flex-1 px-4 py-6 space-y-2">
+            <button onclick="showSection('dashboard')" id="nav-dashboard" class="nav-item w-full flex items-center gap-3 px-4 py-3 bg-blue-600 rounded-lg text-white transition-all">
+                <i data-feather="home" class="w-5 h-5"></i>
+                <span class="font-medium">Overview</span>
+            </button>
+            
+            <button onclick="showSection('schedule')" id="nav-schedule" class="nav-item w-full flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg transition-all">
+                <i data-feather="calendar" class="w-5 h-5"></i>
+                <span class="font-medium">My Batches</span>
+            </button>
+            
+            <button onclick="showSection('students')" id="nav-students" class="nav-item w-full flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg transition-all">
+                <i data-feather="users" class="w-5 h-5"></i>
+                <span class="font-medium">Students & Fees</span>
+            </button>
+            
+            <button onclick="showSection('profile')" id="nav-profile" class="nav-item w-full flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg transition-all">
+                <i data-feather="settings" class="w-5 h-5"></i>
+                <span class="font-medium">Profile Setup</span>
+            </button>
+        </nav>
+
+        <!-- User Info -->
+        <div class="p-4 border-t border-gray-700">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center font-bold text-lg">T</div>
+                <div>
+                    <p class="text-sm font-semibold text-white">Teacher Admin</p>
+                    <a href="/" class="text-xs text-gray-400 hover:text-blue-400">Logout</a>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ================= MAIN CONTENT AREA ================= -->
+    <main class="flex-1 flex flex-col h-screen overflow-y-auto relative">
+        
+        <!-- HEADER -->
+        <header class="h-16 bg-gray-800 border-b border-gray-700 flex items-center justify-between px-8 sticky top-0 z-10">
+            <h2 class="text-xl font-semibold text-gray-200" id="page-title">Dashboard Overview</h2>
+            
+            <div class="flex items-center gap-6">
+                <!-- Go Live Toggle -->
+                <div class="flex items-center gap-2 bg-gray-900 px-3 py-1.5 rounded-full border border-gray-600">
+                    <span class="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse"></span>
+                    <span class="text-xs font-bold text-gray-300 uppercase tracking-wide">Live on App</span>
+                </div>
+                
+                <!-- Notification Bell -->
+                <button class="relative text-gray-400 hover:text-white">
+                    <i data-feather="bell" class="w-5 h-5"></i>
+                    <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+                </button>
+            </div>
+        </header>
+
+        <div class="p-8">
+            
+            <!-- SECTION 1: DASHBOARD OVERVIEW -->
+            <div id="dashboard" class="content-section space-y-8">
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-lg">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-gray-400 text-sm">Active Students</p>
+                                <h3 class="text-3xl font-bold text-white mt-1">24</h3>
+                            </div>
+                            <div class="p-2 bg-blue-900/30 rounded-lg text-blue-400"><i data-feather="users"></i></div>
+                        </div>
+                        <p class="text-green-400 text-xs mt-4 flex items-center gap-1"><i data-feather="trending-up" class="w-3 h-3"></i> +3 this month</p>
+                    </div>
+
+                    <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-lg">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-gray-400 text-sm">Pending Fees</p>
+                                <h3 class="text-3xl font-bold text-white mt-1">₹4,500</h3>
+                            </div>
+                            <div class="p-2 bg-yellow-900/30 rounded-lg text-yellow-400"><i data-feather="alert-circle"></i></div>
+                        </div>
+                        <p class="text-gray-500 text-xs mt-4">From 3 students</p>
+                    </div>
+
+                    <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-lg">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-gray-400 text-sm">Profile Views</p>
+                                <h3 class="text-3xl font-bold text-white mt-1">142</h3>
+                            </div>
+                            <div class="p-2 bg-purple-900/30 rounded-lg text-purple-400"><i data-feather="eye"></i></div>
+                        </div>
+                        <p class="text-xs mt-4 text-blue-400 hover:underline cursor-pointer">View Analytics</p>
+                    </div>
+                </div>
+
+                <!-- Recent Activity / Leads -->
+                <div class="bg-gray-800 rounded-xl border border-gray-700">
+                    <div class="p-6 border-b border-gray-700 flex justify-between items-center">
+                        <h3 class="font-bold text-lg">New Student Inquiries</h3>
+                        <button class="text-sm text-blue-400 hover:text-blue-300">View All</button>
+                    </div>
+                    <div class="divide-y divide-gray-700">
+                        <div class="p-4 flex items-center justify-between hover:bg-gray-700/50 transition">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-full bg-gray-600 flex items-center justify-center">RS</div>
+                                <div>
+                                    <p class="font-bold">Rahul Sharma</p>
+                                    <p class="text-sm text-gray-400">Class 10 • Mathematics • 2km Away</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="px-3 py-1 text-sm bg-green-600 hover:bg-green-700 rounded text-white">Accept</button>
+                                <button class="px-3 py-1 text-sm border border-gray-600 hover:bg-gray-700 rounded text-gray-300">Decline</button>
+                            </div>
+                        </div>
+                        <!-- More Rows... -->
+                        <div class="p-4 flex items-center justify-between hover:bg-gray-700/50 transition">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-full bg-gray-600 flex items-center justify-center">AN</div>
+                                <div>
+                                    <p class="font-bold">Anjali Nair</p>
+                                    <p class="text-sm text-gray-400">Class 12 • Physics • 5km Away</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="px-3 py-1 text-sm bg-green-600 hover:bg-green-700 rounded text-white">Accept</button>
+                                <button class="px-3 py-1 text-sm border border-gray-600 hover:bg-gray-700 rounded text-gray-300">Decline</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 2: SCHEDULE / BATCHES -->
+            <div id="schedule" class="content-section hidden-section space-y-6">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-xl font-bold">Your Timetable</h3>
+                    <button class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-sm flex items-center gap-2">
+                        <i data-feather="plus"></i> New Batch
+                    </button>
+                </div>
+
+                <!-- Calendar Grid (Simplified) -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Monday Column -->
+                    <div class="bg-gray-800 rounded-xl border border-gray-700 p-4">
+                        <h4 class="font-bold text-gray-400 mb-4 border-b border-gray-700 pb-2">Monday</h4>
+                        <div class="space-y-3">
+                            <!-- Class Card -->
+                            <div class="bg-gray-700/50 p-4 rounded-lg border-l-4 border-blue-500 hover:bg-gray-700 transition cursor-pointer group">
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-bold text-white">Mathematics</span>
+                                    <span class="text-xs bg-gray-900 px-2 py-1 rounded text-gray-300">05:30 PM</span>
+                                </div>
+                                <p class="text-sm text-gray-400">Class 10 - Batch A</p>
+                                <div class="mt-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button class="text-xs bg-red-500/20 text-red-400 px-2 py-1 rounded hover:bg-red-500 hover:text-white">Cancel Class</button>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gray-700/50 p-4 rounded-lg border-l-4 border-purple-500 hover:bg-gray-700 transition cursor-pointer">
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-bold text-white">Physics</span>
+                                    <span class="text-xs bg-gray-900 px-2 py-1 rounded text-gray-300">07:00 PM</span>
+                                </div>
+                                <p class="text-sm text-gray-400">Class 12 - Batch B</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tuesday Column -->
+                    <div class="bg-gray-800 rounded-xl border border-gray-700 p-4">
+                        <h4 class="font-bold text-gray-400 mb-4 border-b border-gray-700 pb-2">Tuesday</h4>
+                        <div class="text-center py-8 text-gray-500 italic">No classes scheduled</div>
+                    </div>
+
+                    <!-- Wednesday Column -->
+                    <div class="bg-gray-800 rounded-xl border border-gray-700 p-4">
+                        <h4 class="font-bold text-gray-400 mb-4 border-b border-gray-700 pb-2">Wednesday</h4>
+                        <div class="space-y-3">
+                             <div class="bg-gray-700/50 p-4 rounded-lg border-l-4 border-blue-500 hover:bg-gray-700 transition cursor-pointer">
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-bold text-white">Mathematics</span>
+                                    <span class="text-xs bg-gray-900 px-2 py-1 rounded text-gray-300">05:30 PM</span>
+                                </div>
+                                <p class="text-sm text-gray-400">Class 10 - Batch A</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 3: STUDENTS & FEES -->
+            <div id="students" class="content-section hidden-section space-y-6">
+                <!-- Fee Summary -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="bg-green-900/30 border border-green-800 p-4 rounded-lg">
+                        <p class="text-green-400 text-sm">Collected this month</p>
+                        <p class="text-2xl font-bold text-white">₹12,000</p>
+                    </div>
+                    <div class="bg-red-900/30 border border-red-800 p-4 rounded-lg">
+                        <p class="text-red-400 text-sm">Overdue</p>
+                        <p class="text-2xl font-bold text-white">₹2,000</p>
+                    </div>
+                </div>
+
+                <!-- Table -->
+                <div class="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
+                    <table class="w-full text-left">
+                        <thead class="bg-gray-700 text-gray-300 text-sm uppercase">
+                            <tr>
+                                <th class="p-4">Student Name</th>
+                                <th class="p-4">Batch</th>
+                                <th class="p-4">Fee Status</th>
+                                <th class="p-4">Last Payment</th>
+                                <th class="p-4 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-700 text-sm">
+                            <tr class="hover:bg-gray-700/50">
+                                <td class="p-4 font-bold">Arjun Singh</td>
+                                <td class="p-4">Class 10 Math</td>
+                                <td class="p-4"><span class="bg-green-900 text-green-300 px-2 py-1 rounded text-xs">Paid</span></td>
+                                <td class="p-4 text-gray-400">Jan 10, 2026</td>
+                                <td class="p-4 text-right"><button class="text-gray-400 hover:text-white"><i data-feather="more-horizontal"></i></button></td>
+                            </tr>
+                            <tr class="hover:bg-gray-700/50">
+                                <td class="p-4 font-bold">Sneha Gupta</td>
+                                <td class="p-4">Class 12 Physics</td>
+                                <td class="p-4"><span class="bg-red-900 text-red-300 px-2 py-1 rounded text-xs animate-pulse">Overdue</span></td>
+                                <td class="p-4 text-gray-400">Dec 15, 2025</td>
+                                <td class="p-4 text-right">
+                                    <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-xs">Send Reminder</button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-700/50">
+                                <td class="p-4 font-bold">Rohan Das</td>
+                                <td class="p-4">Class 10 Math</td>
+                                <td class="p-4"><span class="bg-yellow-900 text-yellow-300 px-2 py-1 rounded text-xs">Due in 3 days</span></td>
+                                <td class="p-4 text-gray-400">Jan 12, 2026</td>
+                                <td class="p-4 text-right"><button class="text-gray-400 hover:text-white"><i data-feather="more-horizontal"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- SECTION 4: PROFILE SETUP -->
+            <div id="profile" class="content-section hidden-section space-y-8">
+                <div class="bg-gray-800 rounded-xl border border-gray-700 p-8 max-w-4xl mx-auto">
+                    <h3 class="text-2xl font-bold mb-6 border-b border-gray-700 pb-4">Tuition Setup</h3>
+                    
+                    <form class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-gray-400 mb-2">Tuition Name</label>
+                                <input type="text" value="Sharma Mathematics" class="w-full bg-gray-900 border border-gray-600 rounded p-3 text-white focus:border-blue-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-gray-400 mb-2">Experience (Years)</label>
+                                <input type="number" value="8" class="w-full bg-gray-900 border border-gray-600 rounded p-3 text-white focus:border-blue-500 outline-none">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-gray-400 mb-2">Bio / About Me</label>
+                            <textarea class="w-full bg-gray-900 border border-gray-600 rounded p-3 text-white focus:border-blue-500 outline-none h-32">I am an experienced Maths tutor specializing in CBSE and ICSE boards for classes 9-12. My focus is on concept clarity and board exam preparation.</textarea>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-gray-400 mb-2">Subjects Offered</label>
+                                <div class="flex gap-2 flex-wrap">
+                                    <span class="bg-blue-600 px-3 py-1 rounded text-sm cursor-pointer">Mathematics ✕</span>
+                                    <span class="bg-gray-700 px-3 py-1 rounded text-sm cursor-pointer border border-gray-600 hover:bg-gray-600">+ Add Subject</span>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-gray-400 mb-2">Pricing (Monthly)</label>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-gray-500">₹</span>
+                                    <input type="number" value="1000" class="w-full bg-gray-900 border border-gray-600 rounded p-3 text-white focus:border-blue-500 outline-none">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Map Placeholder -->
+                        <div>
+                            <label class="block text-gray-400 mb-2">Location (Set Pin)</label>
+                            <div class="w-full h-48 bg-gray-700 rounded-lg flex items-center justify-center border border-gray-600 relative overflow-hidden group">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/e/ec/USA_location_map.svg" class="opacity-20 w-full h-full object-cover">
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <button type="button" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow-lg flex items-center gap-2">
+                                        <i data-feather="map-pin"></i> Update Location
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end gap-4 pt-4">
+                            <button type="button" class="text-gray-400 hover:text-white">Cancel</button>
+                            <button type="submit" class="bg-green-600 hover:bg-green-700 px-6 py-2 rounded font-bold text-white">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ================= JAVASCRIPT ================= -->
+    <script>
+        // Initialize Icons
+        feather.replace();
+
+        // Section Switching Logic
+        function showSection(sectionId) {
+            // 1. Hide all sections
+            document.querySelectorAll('.content-section').forEach(el => {
+                el.classList.add('hidden-section');
+            });
+
+            // 2. Remove active state from all nav buttons
+            document.querySelectorAll('.nav-item').forEach(el => {
+                el.classList.remove('bg-blue-600', 'text-white');
+                el.classList.add('text-gray-400', 'hover:bg-gray-700', 'hover:text-white');
+            });
+
+            // 3. Show selected section
+            document.getElementById(sectionId).classList.remove('hidden-section');
+
+            // 4. Set active state on clicked button
+            const activeBtn = document.getElementById('nav-' + sectionId);
+            activeBtn.classList.remove('text-gray-400', 'hover:bg-gray-700', 'hover:text-white');
+            activeBtn.classList.add('bg-blue-600', 'text-white');
+
+            // 5. Update Header Title
+            const titles = {
+                'dashboard': 'Dashboard Overview',
+                'schedule': 'Manage Batches & Schedule',
+                'students': 'Student Directory & Fees',
+                'profile': 'Edit Profile & Settings'
+            };
+            document.getElementById('page-title').innerText = titles[sectionId];
+        }
+    </script>
+</body>
+</html>
